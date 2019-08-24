@@ -48,3 +48,5 @@ if __name__ == '__main__':
             print(f'[+] MAC address was successfully changed to {options.new_mac}.')
         else:
             print('[!] MAC address did not get changed.')
+    else:
+        print('[!] Access denied. Please SUDO!')
