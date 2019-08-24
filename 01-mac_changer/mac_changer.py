@@ -31,21 +31,19 @@ def get_arguments():
 
 def change_mac(interface, new_mac):
     print('[+] Changing MAC addres for {} to {}'.format(interface, new_mac))
-    subprocess.run(['ifconfig', interface, 'down'])
-    subprocess.run(['ifconfig', interface, 'hw', 'ether', new_mac])  # Depends on our interface.
-    subprocess.run(['ifconfig', interface, 'up'])
+    subprocess.run(['ifconfig', interface, 'ether', new_mac])
 
 
 if __name__ == '__main__':
     if check_super_user():
         options = get_arguments()
         current_mac = get_current_mac(options.interface)
-        print(f'Current MAC: {current_mac}')
+        print('Current MAC: {}'.format(current_mac))
 
         change_mac(options.interface, options.new_mac)
 
-        if current_mac == options.new_mac:
-            print(f'[+] MAC address was successfully changed to {options.new_mac}.')
+        if current_mac != options.new_mac:
+            print('[+] MAC address was successfully changed to {}.'.format(options.new_mac))
         else:
             print('[!] MAC address did not get changed.')
     else:
