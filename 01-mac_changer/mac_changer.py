@@ -5,10 +5,10 @@ import os
 
 
 def check_super_user():
-    return os.geteuid()==0
+    return os.geteuid() == 0
+
 
 def get_current_mac(interface):
-    import ipdb; ipdb.set_trace()
     ifconfig_result = subprocess.check_output(['ifconfig', interface])
     mac_addr = re.search(r'\w\w:\w\w:\w\w:\w\w:\w\w:\w\w', str(ifconfig_result))
     if mac_addr:
