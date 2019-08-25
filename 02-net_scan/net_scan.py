@@ -1,5 +1,10 @@
 import scapy.all as scapy
 import optparse
+import os
+
+
+def check_super_user():
+    return os.geteuid() == 0
 
 # def scan(ip): OLD STUFF
 #     arp_request = scapy.ARP(pdst=ip)
@@ -37,7 +42,11 @@ def print_result(results_list):
         print("{} \t\t {}".format(client["ip"], client["mac"]))
 
 
-options = get_arguments()
-# scan_result = scan("192.168.0.1/24")
-scan_result = scan(options.target)
-print_result(scan_result)
+if __name__ == '__main__':
+    if check_super_user():
+        options = get_arguments()
+        # scan_result = scan("192.168.0.1/24")
+        scan_result = scan(options.target)
+        print_result(scan_result)
+    else:
+        print('[!] Access denied. Please SUDO!')
