@@ -1,4 +1,9 @@
-import scapy.all as scapy
+'''
+Usage: sudo python net_scan.py -t 192.168.0.1/24
+'''
+
+
+from scapy.all import ARP, Ether, srp
 import optparse
 import os
 
@@ -24,10 +29,10 @@ def get_arguments():
 
 
 def scan(ip):
-    arp_request = scapy.ARP(pdst=ip)
-    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
+    arp_request = ARP(pdst=ip)
+    broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast/arp_request
-    answered = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]    # Get only the answered ones.
+    answered = srp(arp_request_broadcast, timeout=3, verbose=False)[0]    # Get only the answered ones.
 
     clients_list = []
     for answer in answered:
@@ -45,7 +50,6 @@ def print_result(results_list):
 if __name__ == '__main__':
     if check_super_user():
         options = get_arguments()
-        # scan_result = scan("192.168.0.1/24")
         scan_result = scan(options.target)
         print_result(scan_result)
     else:
