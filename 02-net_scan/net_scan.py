@@ -1,8 +1,3 @@
-'''
-Usage: sudo python net_scan.py -t 192.168.0.1/24
-'''
-
-
 from scapy.all import ARP, Ether, srp
 import optparse
 import os
@@ -29,16 +24,15 @@ def get_arguments():
 
 
 def scan(ip):
-    arp_request = ARP(pdst=ip)
+    arp_request = ARP(pdst=ip)  # Falla por el /24, cómo se pone?
     broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast/arp_request
-    answered = srp(arp_request_broadcast, timeout=3, verbose=False)[0]    # Get only the answered ones.
+    result = srp(arp_request_broadcast, timeout=3, verbose=False)[0]    # Get only the answered ones.
 
-    clients_list = []
-    for answer in answered:
-        client_dict = {"ip": answer[1].psrc, "mac": answer[1].hwsrc}
-        clients_list.append(client_dict)
-    return clients_list
+    clients= []
+    for sent, received in result:
+        clients.append({'ip': received.psrc, 'mac': received.hwsrc})
+    return clients
 
 
 def print_result(results_list):
