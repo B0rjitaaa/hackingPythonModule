@@ -1,0 +1,4 @@
+sslstrip
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000
+
+http://sic.us.es/servicios/correo-electronico/correo-electronico

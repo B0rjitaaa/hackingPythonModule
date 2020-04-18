@@ -33,7 +33,7 @@ def get_arguments():
 
 def change_mac(interface, new_mac):
     print('[+] Changing MAC addres for {} to {}'.format(interface, new_mac))
-    subprocess.run(['ifconfig', interface, 'ether', new_mac])
+    subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
 
 
 if __name__ == '__main__':

