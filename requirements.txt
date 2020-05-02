@@ -1,2 +1,3 @@
 ipdb
 scapy==2.4.3
+https://github.com/B0rjitaaa/hackingPythonModule.git
