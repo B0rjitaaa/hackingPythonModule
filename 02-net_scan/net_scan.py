@@ -15,7 +15,7 @@ def get_arguments():
 
 
 def scan(ip):
-    arp_request = ARP(pdst=ip)  # Falla por el /24, cómo se pone?
+    arp_request = ARP(pdst=ip)
     broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast/arp_request
     result = srp(arp_request_broadcast, timeout=3, verbose=False)[0]    # Get only the answered ones.
